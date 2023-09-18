@@ -4,19 +4,27 @@ import 'package:todo_app/my_theme.dart';
 class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final int maxLines;
+  final String validationMessage;
   const CustomTextFormField({
     super.key,
     required this.hintText,
     this.maxLines = 1,
+    required this.validationMessage,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return validationMessage;
+        }
+        return null;
+      },
       maxLines: maxLines,
       cursorColor: MyTheme.primaryColor,
       decoration: InputDecoration(
-        hintText: "enter task title",
+        hintText: hintText,
         hintStyle: const TextStyle(
           // color: Color(0xffA9A9A99C),
           fontWeight: FontWeight.w400,

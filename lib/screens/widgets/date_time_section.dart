@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/my_theme.dart';
 
 class DateTimeSection extends StatefulWidget {
@@ -11,6 +12,8 @@ class DateTimeSection extends StatefulWidget {
 }
 
 class _DateTimeSectionState extends State<DateTimeSection> {
+  String currentDate = DateFormat.yMd().format(DateTime.now());
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,7 +28,9 @@ class _DateTimeSectionState extends State<DateTimeSection> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                await showCursomDatePicker();
+              },
               icon: Icon(
                 Icons.calendar_month,
                 color: MyTheme.primaryColor,
@@ -37,12 +42,28 @@ class _DateTimeSectionState extends State<DateTimeSection> {
           height: 12,
         ),
         Text(
-          "16/9/2023",
+          currentDate,
           style: const TextStyle(
             fontSize: 18,
           ),
         ),
       ],
     );
+  }
+
+  showCursomDatePicker() async {
+    var chosenDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(
+        const Duration(days: 365),
+      ),
+    );
+    if (chosenDate == null) {
+      return;
+    }
+    setState(() {});
+    currentDate = DateFormat.yMd().format(chosenDate);
   }
 }

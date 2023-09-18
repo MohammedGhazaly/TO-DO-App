@@ -12,6 +12,7 @@ class MyTheme {
   static Color blackColorDarkMode = const Color(0xff060E1E);
   static Color gradientColor = const Color(0xff56D7BC);
   static ThemeData lightTheme = ThemeData(
+    colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
     useMaterial3: true,
 
     fontFamily: "Poppins",
