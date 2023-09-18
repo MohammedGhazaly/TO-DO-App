@@ -31,6 +31,12 @@ class MyTheme {
         fontSize: 18,
         fontWeight: FontWeight.w700,
       ),
+      titleSmall: TextStyle(
+        color: MyTheme.blackColorLightMode,
+        fontSize: 16,
+
+        // fontWeight: FontWeight.w700,
+      ),
     ),
   );
 
@@ -53,6 +59,11 @@ class MyTheme {
         color: MyTheme.whiteColor,
         fontSize: 18,
         fontWeight: FontWeight.w700,
+      ),
+      titleSmall: TextStyle(
+        color: whiteColor,
+        fontSize: 16,
+        // fontWeight: FontWeight.w700,
       ),
     ),
   );
