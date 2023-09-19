@@ -16,7 +16,11 @@ class MyTheme {
     useMaterial3: true,
 
     fontFamily: "Poppins",
-    appBarTheme: AppBarTheme(backgroundColor: primaryColor, elevation: 0),
+    appBarTheme: AppBarTheme(
+      iconTheme: IconThemeData(color: whiteColor),
+      backgroundColor: primaryColor,
+      elevation: 0,
+    ),
     primaryColor: primaryColor,
     // useMaterial3: true,
     scaffoldBackgroundColor: scaffoldBackgroundColorLight,
@@ -46,6 +50,7 @@ class MyTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: primaryColor,
       elevation: 0,
+      iconTheme: IconThemeData(color: blackColorDarkMode),
     ),
     primaryColor: primaryColor,
     scaffoldBackgroundColor: blackColorDarkMode,

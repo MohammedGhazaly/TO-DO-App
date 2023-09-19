@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:todo_app/my_theme.dart';
-import 'package:todo_app/screens/widgets/custom_text_form_field.dart';
-import 'package:todo_app/screens/widgets/date_time_section.dart';
+import 'package:todo_app/screens/home/widgets/custom_text_form_field.dart';
 
 class AddTaskWidget extends StatefulWidget {
   const AddTaskWidget({super.key});
@@ -11,6 +11,8 @@ class AddTaskWidget extends StatefulWidget {
 }
 
 class _AddTaskWidgetState extends State<AddTaskWidget> {
+  String currentDate = DateFormat.yMd().format(DateTime.now());
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,35 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     validationMessage: "Please enter task description",
                     maxLines: 4,
                   ),
-                  const DateTimeSection(),
+                  Row(
+                    children: [
+                      const Text(
+                        "Select date",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          await showCursomDatePicker();
+                        },
+                        icon: Icon(
+                          Icons.calendar_month,
+                          color: MyTheme.primaryColor,
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    currentDate,
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
                   const SizedBox(
                     height: 24,
                   ),
@@ -72,5 +102,21 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
         ),
       ),
     );
+  }
+
+  showCursomDatePicker() async {
+    var chosenDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(
+        const Duration(days: 365),
+      ),
+    );
+    if (chosenDate == null) {
+      return;
+    }
+    setState(() {});
+    currentDate = DateFormat.yMd().format(chosenDate);
   }
 }

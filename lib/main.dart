@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:todo_app/my_theme.dart';
+import 'package:todo_app/screens/edit_task/edit_task_screen.dart';
 import 'package:todo_app/screens/home/home_screen.dart';
 
 void main() async {
@@ -25,6 +26,7 @@ class TODO extends StatelessWidget {
       initialRoute: HomeScreen.routeName,
       routes: {
         HomeScreen.routeName: (context) => const HomeScreen(),
+        EditTaskScreen.routeName: (context) => const EditTaskScreen(),
       },
     );
   }

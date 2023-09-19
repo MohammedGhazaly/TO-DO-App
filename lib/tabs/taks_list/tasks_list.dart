@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:todo_app/my_theme.dart';
+import 'package:todo_app/screens/edit_task/edit_task_screen.dart';
 import 'package:todo_app/tabs/taks_list/task_widget.dart';
 
 class TasksTab extends StatelessWidget {
@@ -12,7 +13,7 @@ class TasksTab extends StatelessWidget {
       children: [
         CalendarAgenda(
           selectedDateColor: MyTheme.primaryColor,
-          locale: "ar",
+          locale: "en",
           events: [
             DateTime.now(),
             DateTime.now().add(Duration(days: 2)),
@@ -27,10 +28,16 @@ class TasksTab extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return TaskWidget();
-              }),
+            itemCount: 5,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, EditTaskScreen.routeName);
+                },
+                child: TaskWidget(),
+              );
+            },
+          ),
         )
       ],
     );

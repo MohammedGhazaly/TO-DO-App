@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/my_theme.dart';
-import 'package:todo_app/screens/widgets/add_task.dart';
+import 'package:todo_app/screens/home/widgets/add_task.dart';
 import 'package:todo_app/tabs/settings/settings_list.dart';
 import 'package:todo_app/tabs/taks_list/tasks_list.dart';
 
