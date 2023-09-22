@@ -8,6 +8,8 @@ environment:
   sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
+  shared_preferences: ^2.2.1
+  provider: ^6.0.5
   flutter_slidable: ^3.0.0
   calendar_agenda: ^0.0.2+3
   intl: ^0.17.0
