@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/screens/home/widgets/custom_text_form_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddTaskWidget extends StatefulWidget {
   const AddTaskWidget({super.key});
@@ -23,7 +24,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
         child: Column(
           children: [
             Text(
-              "Add new task",
+              AppLocalizations.of(context)!.new_task,
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: MyTheme.blackColorLightMode,
                     fontWeight: FontWeight.w700,
@@ -33,22 +34,24 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
               key: _formKey,
               child: Column(
                 children: [
-                  const CustomTextFormField(
-                      hintText: "enter task title",
-                      validationMessage: "Please enter task title"),
+                  CustomTextFormField(
+                      hintText: AppLocalizations.of(context)!.task_title,
+                      validationMessage:
+                          AppLocalizations.of(context)!.task_title_validation),
                   const SizedBox(
                     height: 15,
                   ),
-                  const CustomTextFormField(
-                    hintText: "enter task description",
-                    validationMessage: "Please enter task description",
+                  CustomTextFormField(
+                    hintText: AppLocalizations.of(context)!.task_description,
+                    validationMessage: AppLocalizations.of(context)!
+                        .task_description_validation,
                     maxLines: 4,
                   ),
                   Row(
                     children: [
-                      const Text(
-                        "Select date",
-                        style: TextStyle(
+                      Text(
+                        AppLocalizations.of(context)!.select_date,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
@@ -91,8 +94,8 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {}
                     },
-                    child: const Text(
-                      "Add",
+                    child: Text(
+                      AppLocalizations.of(context)!.add,
                     ),
                   )
                 ],

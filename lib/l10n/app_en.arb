@@ -1,0 +1,14 @@
+{
+"to_do_list" : "To Do List",
+"settings" : "Settings",
+"to_do" : "To Do",
+"new_task" : "Add new taks",
+"task_title" : "Enter task title",
+"task_description" : "Enter task description",
+"task_title_validation" : "Please enter task title",
+"task_description_validation" : "Please enter task description",
+"select_date" : "Select date",
+"add" : "Add",
+"edit_task":"Edit Task",
+"save_changes" : "Save changes"
+}

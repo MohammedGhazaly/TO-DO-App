@@ -3,6 +3,7 @@ import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/screens/home/widgets/add_task.dart';
 import 'package:todo_app/tabs/settings/settings_list.dart';
 import 'package:todo_app/tabs/taks_list/tasks_list.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,8 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text("TO Do List", style: Theme.of(context).textTheme.titleLarge),
+        title: Text(AppLocalizations.of(context)!.to_do_list,
+            style: Theme.of(context).textTheme.titleLarge),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -59,17 +60,17 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           backgroundColor: MyTheme.whiteColor,
           elevation: 0,
-          items: const [
+          items: [
             BottomNavigationBarItem(
-                icon: Icon(
+                icon: const Icon(
                   Icons.format_list_bulleted,
                 ),
-                label: "To Do"),
+                label: AppLocalizations.of(context)!.to_do),
             BottomNavigationBarItem(
-              icon: Icon(
+              icon: const Icon(
                 Icons.settings,
               ),
-              label: "Settings",
+              label: AppLocalizations.of(context)!.settings,
             ),
           ],
         ),

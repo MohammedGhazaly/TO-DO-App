@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/screens/edit_task/edit_task_screen.dart';
 import 'package:todo_app/tabs/taks_list/task_widget.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 class TasksTab extends StatelessWidget {
   const TasksTab({super.key});
@@ -11,17 +11,11 @@ class TasksTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CalendarAgenda(
-          selectedDateColor: MyTheme.primaryColor,
-          locale: "en",
-          events: [
-            DateTime.now(),
-            DateTime.now().add(Duration(days: 2)),
-          ],
-          initialDate: DateTime.now(),
-          firstDate: DateTime.now().subtract(const Duration(days: 365)),
-          lastDate: DateTime.now().add(const Duration(days: 365)),
-          onDateSelected: (date) {},
+        DatePicker(
+          DateTime.now().subtract(const Duration(days: 7)),
+          initialSelectedDate: DateTime.now(),
+          selectionColor: MyTheme.primaryColor,
+          height: MediaQuery.of(context).size.height * 0.15,
         ),
         const SizedBox(
           height: 16,

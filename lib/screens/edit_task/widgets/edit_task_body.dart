@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/screens/home/widgets/custom_text_form_field.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditTaskBody extends StatefulWidget {
   const EditTaskBody({super.key});
@@ -35,14 +36,16 @@ class _EditTaskBodyState extends State<EditTaskBody> {
             children: [
               CustomTextFormField(
                 hintText: "This is title",
-                validationMessage: "Please enter task title",
+                validationMessage:
+                    AppLocalizations.of(context)!.task_title_validation,
               ),
               const SizedBox(
                 height: 24,
               ),
               CustomTextFormField(
                 hintText: "This is description",
-                validationMessage: "Please enter task description",
+                validationMessage:
+                    AppLocalizations.of(context)!.task_description_validation,
                 maxLines: 4,
               ),
               const SizedBox(
@@ -50,8 +53,8 @@ class _EditTaskBodyState extends State<EditTaskBody> {
               ),
               Row(
                 children: [
-                  const Text(
-                    "Select date",
+                  Text(
+                    AppLocalizations.of(context)!.select_date,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
@@ -95,8 +98,8 @@ class _EditTaskBodyState extends State<EditTaskBody> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {}
                 },
-                child: const Text(
-                  "Save changes",
+                child: Text(
+                  AppLocalizations.of(context)!.save_changes,
                 ),
               )
             ],
