@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/my_theme.dart';
+import 'package:todo_app/providers/app_config_provider.dart';
 import 'package:todo_app/screens/home/widgets/custom_text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -13,10 +15,13 @@ class EditTaskBody extends StatefulWidget {
 
 class _EditTaskBodyState extends State<EditTaskBody> {
   String currentDate = DateFormat.yMd().format(DateTime.now());
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    var appConfig = Provider.of<AppConfigProvider>(context);
+
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -27,7 +32,7 @@ class _EditTaskBodyState extends State<EditTaskBody> {
         padding: const EdgeInsets.all(16),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: MyTheme.whiteColor,
+          color: appConfig.isDarkTheme() ? Color(0xff141922) : Colors.white,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Form(

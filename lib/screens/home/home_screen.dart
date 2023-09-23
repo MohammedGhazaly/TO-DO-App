@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/my_theme.dart';
+import 'package:todo_app/providers/app_config_provider.dart';
+import 'package:todo_app/screens/home/build_floating_action_button.dart';
 import 'package:todo_app/screens/home/widgets/add_task.dart';
 import 'package:todo_app/tabs/settings/settings_list.dart';
 import 'package:todo_app/tabs/taks_list/tasks_list.dart';
@@ -21,33 +24,31 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    var appConfig = Provider.of<AppConfigProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.to_do_list,
-            style: Theme.of(context).textTheme.titleLarge),
+        title: Text(
+          currentIndex == 0
+              ? AppLocalizations.of(context)!.to_do_list
+              : AppLocalizations.of(context)!.settings,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: MyTheme.primaryColor,
-        shape: StadiumBorder(
-          side: BorderSide(color: MyTheme.whiteColor, width: 5),
-        ),
-        onPressed: () {
-          showAddBottomSheet();
-        },
-        child: Icon(
-          Icons.add,
-          color: MyTheme.whiteColor,
-          size: 28,
-        ),
-      ),
+      floatingActionButton: currentIndex == 0
+          ? createFloatingActionButton(
+              appConfig: appConfig, onPressedFunction: showAddBottomSheet)
+          : null,
       body: screens[currentIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: MyTheme.gradientColor.withOpacity(0.35),
-            blurRadius: 7,
-          )
+          appConfig.isDarkTheme()
+              ? const BoxShadow()
+              : BoxShadow(
+                  color: MyTheme.gradientColor.withOpacity(0.35),
+                  blurRadius: 7,
+                )
         ]),
         child: BottomNavigationBar(
           currentIndex: currentIndex,
@@ -58,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             );
           },
-          backgroundColor: MyTheme.whiteColor,
+          backgroundColor:
+              appConfig.isDarkTheme() ? Color(0xff141922) : MyTheme.whiteColor,
           elevation: 0,
           items: [
             BottomNavigationBarItem(

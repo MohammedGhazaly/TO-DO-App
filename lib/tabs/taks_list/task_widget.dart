@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/my_theme.dart';
+import 'package:todo_app/providers/app_config_provider.dart';
 
 class TaskWidget extends StatelessWidget {
   const TaskWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var appConfig = Provider.of<AppConfigProvider>(context);
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Slidable(
@@ -25,7 +29,7 @@ class TaskWidget extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color: MyTheme.whiteColor,
+            color: appConfig.isDarkTheme() ? Color(0xff141922) : Colors.white,
             borderRadius: BorderRadius.circular(15),
           ),
           child: Row(

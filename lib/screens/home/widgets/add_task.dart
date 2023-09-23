@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/my_theme.dart';
+import 'package:todo_app/providers/app_config_provider.dart';
 import 'package:todo_app/screens/home/widgets/custom_text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -17,6 +19,8 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    var appConfig = Provider.of<AppConfigProvider>(context);
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -26,7 +30,9 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
             Text(
               AppLocalizations.of(context)!.new_task,
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: MyTheme.blackColorLightMode,
+                    color: appConfig.isDarkTheme()
+                        ? Colors.white
+                        : MyTheme.blackColorLightMode,
                     fontWeight: FontWeight.w700,
                   ),
             ),

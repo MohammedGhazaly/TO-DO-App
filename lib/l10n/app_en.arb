@@ -10,5 +10,11 @@
 "select_date" : "Select date",
 "add" : "Add",
 "edit_task":"Edit Task",
-"save_changes" : "Save changes"
+"save_changes" : "Save changes",
+"language" : "Language",
+"english" : "English",
+"arabic" : "Arabic",
+"mode" : "Mode",
+"light" : "Light",
+"dark" : "Dark"
 }

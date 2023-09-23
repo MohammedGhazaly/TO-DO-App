@@ -10,5 +10,11 @@
 "select_date" : "اختر الوقت",
 "add" : "ضف المهمه",
 "edit_task":"تعديل المهمه",
-"save_changes" : "قم بالتعديل"
+"save_changes" : "قم بالتعديل",
+"language" : "اللغة",
+"english" : "الانجليزيه",
+"arabic" : "العربية",
+"mode" : "النمط",
+"light" : "مضئ",
+"dark" : "داكن"
 }
