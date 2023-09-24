@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/providers/app_config_provider.dart';
 
 class TaskWidget extends StatelessWidget {
-  const TaskWidget({super.key});
+  final TaskModel task;
+  const TaskWidget({super.key, required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class TaskWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Slidable(
         startActionPane: ActionPane(
-          motion: ScrollMotion(),
+          motion: const ScrollMotion(),
           children: [
             SlidableAction(
               icon: Icons.delete,
@@ -54,14 +56,14 @@ class TaskWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Play basket ball",
+                      task.title ?? "",
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             fontWeight: FontWeight.w700,
                             color: MyTheme.primaryColor,
                           ),
                     ),
                     Text(
-                      "Description",
+                      task.description ?? "",
                       style: Theme.of(context).textTheme.titleSmall,
                     )
                   ],

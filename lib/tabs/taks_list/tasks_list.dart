@@ -1,25 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/my_theme.dart';
+import 'package:todo_app/providers/list_provider.dart';
 import 'package:todo_app/screens/edit_task/edit_task_screen.dart';
 import 'package:todo_app/tabs/taks_list/task_widget.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 
 import '../../providers/app_config_provider.dart';
 
-class TasksTab extends StatelessWidget {
+class TasksTab extends StatefulWidget {
   const TasksTab({super.key});
 
   @override
+  State<TasksTab> createState() => _TasksTabState();
+}
+
+class _TasksTabState extends State<TasksTab> {
+  @override
   Widget build(BuildContext context) {
     var appConfig = Provider.of<AppConfigProvider>(context);
-
+    var listProvider = Provider.of<ListsProvider>(context);
+    if (listProvider.tasksList.isEmpty) {
+      listProvider.getAllTasksFromFireStore();
+    }
     return Column(
       children: [
         Container(
           decoration: BoxDecoration(color: MyTheme.primaryColor),
           child: DatePicker(
-            DateTime.now(),
+            DateTime.now().subtract(const Duration(days: 7)),
             daysCount: 365,
 
             locale: appConfig.appLanguage,
@@ -36,13 +45,13 @@ class TasksTab extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: 0,
+            itemCount: listProvider.tasksList.length,
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, EditTaskScreen.routeName);
                 },
-                child: TaskWidget(),
+                child: TaskWidget(task: listProvider.tasksList[index]),
               );
             },
           ),

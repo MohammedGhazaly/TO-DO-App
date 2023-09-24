@@ -40,6 +40,7 @@ class _EditTaskBodyState extends State<EditTaskBody> {
           child: Column(
             children: [
               CustomTextFormField(
+                onChangedFunction: (value) {},
                 hintText: "This is title",
                 validationMessage:
                     AppLocalizations.of(context)!.task_title_validation,
@@ -48,6 +49,7 @@ class _EditTaskBodyState extends State<EditTaskBody> {
                 height: 24,
               ),
               CustomTextFormField(
+                onChangedFunction: (value) {},
                 hintText: "This is description",
                 validationMessage:
                     AppLocalizations.of(context)!.task_description_validation,

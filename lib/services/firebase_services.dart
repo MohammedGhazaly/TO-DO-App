@@ -15,11 +15,11 @@ class FirebaseServices {
     );
   }
 
-  static Future<void> addTaskToFirebase(TaskModel task) {
+  static Future<void> addTaskToFirebase(TaskModel task) async {
     var taskCollection = initCollection(); // get/create collection(Class)
     var taskDocument =
         taskCollection.doc(); // create document(Object) with random ID
     task.id = taskDocument.id;
-    return taskDocument.set(task);
+    return await taskDocument.set(task);
   }
 }

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/providers/app_config_provider.dart';
+import 'package:todo_app/providers/list_provider.dart';
 import 'package:todo_app/screens/home/widgets/custom_text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:todo_app/services/firebase_services.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class AddTaskWidget extends StatefulWidget {
   const AddTaskWidget({super.key});
@@ -14,13 +19,16 @@ class AddTaskWidget extends StatefulWidget {
 }
 
 class _AddTaskWidgetState extends State<AddTaskWidget> {
-  String currentDate = DateFormat.yMd().format(DateTime.now());
-
+  // String currentDate = DateFormat.yMd().format(DateTime.now());
+  DateTime selectedDate = DateTime.now();
+  String taskTitle = "";
+  String taskDescription = "";
+  late ListsProvider listsProvider;
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var appConfig = Provider.of<AppConfigProvider>(context);
-
+    listsProvider = Provider.of(context);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -41,6 +49,9 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
               child: Column(
                 children: [
                   CustomTextFormField(
+                      onChangedFunction: (value) {
+                        taskTitle = value;
+                      },
                       hintText: AppLocalizations.of(context)!.task_title,
                       validationMessage:
                           AppLocalizations.of(context)!.task_title_validation),
@@ -48,6 +59,9 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     height: 15,
                   ),
                   CustomTextFormField(
+                    onChangedFunction: (value) {
+                      taskDescription = value;
+                    },
                     hintText: AppLocalizations.of(context)!.task_description,
                     validationMessage: AppLocalizations.of(context)!
                         .task_description_validation,
@@ -77,7 +91,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                     height: 12,
                   ),
                   Text(
-                    currentDate,
+                    DateFormat.yMd().format(selectedDate),
                     style: const TextStyle(
                       fontSize: 18,
                     ),
@@ -98,7 +112,14 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                         foregroundColor:
                             const MaterialStatePropertyAll(Colors.white)),
                     onPressed: () {
-                      if (_formKey.currentState!.validate()) {}
+                      if (_formKey.currentState!.validate()) {
+                        TaskModel task = TaskModel(
+                          title: taskTitle,
+                          description: taskDescription,
+                          dateTime: selectedDate,
+                        );
+                        addTask(task);
+                      }
                     },
                     child: Text(
                       AppLocalizations.of(context)!.add,
@@ -116,7 +137,7 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
   showCursomDatePicker() async {
     var chosenDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: selectedDate,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(
         const Duration(days: 365),
@@ -126,6 +147,23 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       return;
     }
     setState(() {});
-    currentDate = DateFormat.yMd().format(chosenDate);
+    selectedDate = chosenDate;
+  }
+
+  void addTask(TaskModel task) {
+    FirebaseServices.addTaskToFirebase(task).timeout(
+      const Duration(milliseconds: 0),
+      onTimeout: () {
+        listsProvider.getAllTasksFromFireStore();
+        showTopSnackBar(
+          displayDuration: const Duration(seconds: 2),
+          Overlay.of(context),
+          const CustomSnackBar.success(
+            message: "Task added successfully",
+          ),
+        );
+        Navigator.pop(context);
+      },
+    );
   }
 }

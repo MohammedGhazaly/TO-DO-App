@@ -5,6 +5,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/providers/app_config_provider.dart';
+import 'package:todo_app/providers/list_provider.dart';
 import 'package:todo_app/screens/edit_task/edit_task_screen.dart';
 import 'package:todo_app/screens/home/home_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,11 +19,28 @@ void main() async {
   await FirebaseFirestore.instance.disableNetwork();
   await Future.delayed(const Duration(seconds: 2));
   FlutterNativeSplash.remove();
-  runApp(ChangeNotifierProvider<AppConfigProvider>(
-      create: (context) {
-        return AppConfigProvider();
-      },
-      child: const TODO()));
+  runApp(
+      // ChangeNotifierProvider<AppConfigProvider>(
+      //   create: (context) {
+      //     return AppConfigProvider();
+      //   },
+      //   child: const TODO(),
+      // ),
+      MultiProvider(
+    providers: [
+      ChangeNotifierProvider<AppConfigProvider>(
+        create: (context) {
+          return AppConfigProvider();
+        },
+      ),
+      ChangeNotifierProvider<ListsProvider>(
+        create: (context) {
+          return ListsProvider();
+        },
+      ),
+    ],
+    child: const TODO(),
+  ));
 }
 
 class TODO extends StatelessWidget {
