@@ -19,15 +19,15 @@ class TasksTab extends StatelessWidget {
         Container(
           decoration: BoxDecoration(color: MyTheme.primaryColor),
           child: DatePicker(
-            DateTime.now().subtract(const Duration(days: 7)),
+            DateTime.now(),
+            daysCount: 365,
+
             locale: appConfig.appLanguage,
 
-            selectedTextColor:
-                appConfig.isDarkTheme() ? Colors.white : Color(0xff141922),
+            selectedTextColor: Color(0xff141922),
             initialSelectedDate: DateTime.now(),
             // selectionColor: MyTheme.primaryColor,
-            selectionColor:
-                appConfig.isDarkTheme() ? Color(0xff141922) : Colors.white,
+            selectionColor: Colors.white,
             height: MediaQuery.of(context).size.height * 0.15,
           ),
         ),
@@ -36,7 +36,7 @@ class TasksTab extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: 5,
+            itemCount: 0,
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
