@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/my_theme.dart';
 import 'package:todo_app/providers/app_config_provider.dart';
+import 'package:todo_app/providers/list_provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class TaskWidget extends StatelessWidget {
   final TaskModel task;
@@ -12,7 +15,7 @@ class TaskWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appConfig = Provider.of<AppConfigProvider>(context);
-
+    var listsProvider = Provider.of<ListsProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Slidable(
@@ -24,7 +27,15 @@ class TaskWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               label: "Delete",
               backgroundColor: MyTheme.redColor,
-              onPressed: (context) {},
+              onPressed: (context) {
+                listsProvider
+                    .deleteDataFromFireStore(task.id!)
+                    .timeout(Duration.zero, onTimeout: () {
+                  showTopSnackBar(Overlay.of(context),
+                      CustomSnackBar.error(message: "Task removed"));
+                  listsProvider.getAllTasksFromFireStore();
+                });
+              },
             )
           ],
         ),

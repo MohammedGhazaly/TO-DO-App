@@ -22,4 +22,8 @@ class FirebaseServices {
     task.id = taskDocument.id;
     return await taskDocument.set(task);
   }
+
+  static Future<void> deleteTaskFromFireStore(String id) async {
+    await initCollection().doc(id).delete();
+  }
 }
