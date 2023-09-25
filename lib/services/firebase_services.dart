@@ -19,11 +19,19 @@ class FirebaseServices {
     var taskCollection = initCollection(); // get/create collection(Class)
     var taskDocument =
         taskCollection.doc(); // create document(Object) with random ID
-    task.id = taskDocument.id;
+    task.id = taskDocument.id; // We get the auto generated id
     return await taskDocument.set(task);
   }
 
   static Future<void> deleteTaskFromFireStore(String id) async {
     await initCollection().doc(id).delete();
+  }
+
+  static Future<void> updateTaskInFireStore(String id, TaskModel task) async {
+    await FirebaseServices.initCollection().doc(id).update({
+      "title": task.title,
+      "description": task.description,
+      "dateTime": task.dateTime?.millisecondsSinceEpoch,
+    });
   }
 }

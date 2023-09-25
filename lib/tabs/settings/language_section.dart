@@ -16,7 +16,7 @@ class LanguageSection extends StatelessWidget {
       children: [
         Text(
           AppLocalizations.of(context)!.language,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
@@ -31,7 +31,7 @@ class LanguageSection extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: appConfig.isDarkTheme() ? Color(0xff141922) : Colors.white,
+              color: appConfig.isDarkTheme() ? const Color(0xff141922) : Colors.white,
               border: Border.all(color: MyTheme.primaryColor, width: 1),
             ),
             child: Row(

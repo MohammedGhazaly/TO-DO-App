@@ -5,7 +5,7 @@ import 'package:todo_app/services/firebase_services.dart';
 class ListsProvider with ChangeNotifier {
   List<TaskModel> tasksList = [];
 
-  Future<void> getAllTasksFromFireStore() async {
+  Future<void> getAllTasks() async {
     var querySnapshot = await FirebaseServices.initCollection().get();
 
     tasksList =
@@ -13,8 +13,15 @@ class ListsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteDataFromFireStore(String id) async {
+  Future<void> addTask(TaskModel task) async {
+    await FirebaseServices.addTaskToFirebase(task);
+  }
+
+  Future<void> deleteTask(String id) async {
     await FirebaseServices.deleteTaskFromFireStore(id);
-    notifyListeners();
+  }
+
+  Future<void> updateTask(String id, TaskModel task) async {
+    await FirebaseServices.updateTaskInFireStore(id, task);
   }
 }

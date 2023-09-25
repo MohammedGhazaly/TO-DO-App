@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
           backgroundColor:
-              appConfig.isDarkTheme() ? Color(0xff141922) : MyTheme.whiteColor,
+              appConfig.isDarkTheme() ? const Color(0xff141922) : MyTheme.whiteColor,
           elevation: 0,
           items: [
             BottomNavigationBarItem(

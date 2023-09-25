@@ -29,11 +29,11 @@ class TaskWidget extends StatelessWidget {
               backgroundColor: MyTheme.redColor,
               onPressed: (context) {
                 listsProvider
-                    .deleteDataFromFireStore(task.id!)
+                    .deleteTask(task.id!)
                     .timeout(Duration.zero, onTimeout: () {
                   showTopSnackBar(Overlay.of(context),
-                      CustomSnackBar.error(message: "Task removed"));
-                  listsProvider.getAllTasksFromFireStore();
+                      const CustomSnackBar.error(message: "Task removed"));
+                  listsProvider.getAllTasks();
                 });
               },
             )
@@ -42,7 +42,7 @@ class TaskWidget extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color: appConfig.isDarkTheme() ? Color(0xff141922) : Colors.white,
+            color: appConfig.isDarkTheme() ? const Color(0xff141922) : Colors.white,
             borderRadius: BorderRadius.circular(15),
           ),
           child: Row(
@@ -94,7 +94,7 @@ class TaskWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                     color: MyTheme.primaryColor,
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.check,
                     size: 32,
                     color: Colors.white,

@@ -20,7 +20,7 @@ Container createFloatingActionButton(
       shape: StadiumBorder(
         side: BorderSide(
             color: appConfig.isDarkTheme()
-                ? Color(0xff141922)
+                ? const Color(0xff141922)
                 : MyTheme.whiteColor,
             width: 5),
       ),

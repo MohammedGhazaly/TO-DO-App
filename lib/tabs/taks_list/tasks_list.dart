@@ -21,8 +21,9 @@ class _TasksTabState extends State<TasksTab> {
     var appConfig = Provider.of<AppConfigProvider>(context);
     var listProvider = Provider.of<ListsProvider>(context);
     if (listProvider.tasksList.isEmpty) {
-      listProvider.getAllTasksFromFireStore();
+      listProvider.getAllTasks();
     }
+
     return Column(
       children: [
         Container(
@@ -33,7 +34,7 @@ class _TasksTabState extends State<TasksTab> {
 
             locale: appConfig.appLanguage,
 
-            selectedTextColor: Color(0xff141922),
+            selectedTextColor: const Color(0xff141922),
             initialSelectedDate: DateTime.now(),
             // selectionColor: MyTheme.primaryColor,
             selectionColor: Colors.white,
@@ -49,7 +50,8 @@ class _TasksTabState extends State<TasksTab> {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, EditTaskScreen.routeName);
+                  Navigator.pushNamed(context, EditTaskScreen.routeName,
+                      arguments: listProvider.tasksList[index]);
                 },
                 child: TaskWidget(task: listProvider.tasksList[index]),
               );

@@ -6,17 +6,20 @@ class CustomTextFormField extends StatelessWidget {
   final int maxLines;
   final String validationMessage;
   final Function(String value) onChangedFunction;
+  final String initValue;
   const CustomTextFormField({
     super.key,
     required this.hintText,
     this.maxLines = 1,
     required this.validationMessage,
     required this.onChangedFunction,
+    this.initValue = "",
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initValue,
       onChanged: onChangedFunction,
       validator: (value) {
         if (value == null || value.isEmpty) {

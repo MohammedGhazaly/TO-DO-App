@@ -7,7 +7,6 @@ import 'package:todo_app/providers/app_config_provider.dart';
 import 'package:todo_app/providers/list_provider.dart';
 import 'package:todo_app/screens/home/widgets/custom_text_form_field.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:todo_app/services/firebase_services.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -147,14 +146,15 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
       return;
     }
     setState(() {});
+
     selectedDate = chosenDate;
   }
 
   void addTask(TaskModel task) {
-    FirebaseServices.addTaskToFirebase(task).timeout(
+    listsProvider.addTask(task).timeout(
       const Duration(milliseconds: 0),
       onTimeout: () {
-        listsProvider.getAllTasksFromFireStore();
+        listsProvider.getAllTasks();
         showTopSnackBar(
           displayDuration: const Duration(seconds: 2),
           Overlay.of(context),

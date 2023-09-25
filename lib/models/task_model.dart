@@ -28,7 +28,7 @@ class TaskModel {
       "id": id,
       "title": title,
       "description": description,
-      "dateTime": dateTime?.microsecondsSinceEpoch,
+      "dateTime": dateTime?.millisecondsSinceEpoch,
       "isDone": isDone,
     };
   }
