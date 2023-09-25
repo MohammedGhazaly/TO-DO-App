@@ -28,13 +28,14 @@ class TaskWidget extends StatelessWidget {
               label: "Delete",
               backgroundColor: MyTheme.redColor,
               onPressed: (context) {
-                listsProvider
-                    .deleteTask(task.id!)
-                    .timeout(Duration.zero, onTimeout: () {
-                  showTopSnackBar(Overlay.of(context),
-                      const CustomSnackBar.error(message: "Task removed"));
-                  listsProvider.getAllTasks();
-                });
+                listsProvider.deleteTask(task.id!).timeout(
+                  Duration.zero,
+                  onTimeout: () {
+                    showTopSnackBar(Overlay.of(context),
+                        const CustomSnackBar.error(message: "Task removed"));
+                    listsProvider.getAllTasks();
+                  },
+                );
               },
             )
           ],
@@ -42,7 +43,9 @@ class TaskWidget extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
-            color: appConfig.isDarkTheme() ? const Color(0xff141922) : Colors.white,
+            color: appConfig.isDarkTheme()
+                ? const Color(0xff141922)
+                : Colors.white,
             borderRadius: BorderRadius.circular(15),
           ),
           child: Row(
@@ -53,7 +56,9 @@ class TaskWidget extends StatelessWidget {
                 width: 4,
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
-                  color: MyTheme.primaryColor,
+                  color: task.isDone == true
+                      ? MyTheme.greenColor
+                      : MyTheme.primaryColor,
                 ),
                 constraints: BoxConstraints(
                   minHeight: MediaQuery.of(context).size.height * 0.1,
@@ -85,21 +90,44 @@ class TaskWidget extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.center,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                  // height: 30,
-                  // width: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: MyTheme.primaryColor,
-                  ),
-                  child: const Icon(
-                    Icons.check,
-                    size: 32,
-                    color: Colors.white,
-                  ),
-                ),
+                child: task.isDone == true
+                    ? Text(
+                        "Done!",
+                        style: TextStyle(
+                            color: MyTheme.greenColor,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          listsProvider
+                              .markAsDone(task.id!)
+                              .timeout(Duration.zero, onTimeout: () {
+                            listsProvider.getAllTasks();
+                            showTopSnackBar(
+                              Overlay.of(context),
+                              const CustomSnackBar.success(
+                                message: "Task is done :).",
+                              ),
+                            );
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 20),
+                          // height: 30,
+                          // width: 60,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: MyTheme.primaryColor,
+                          ),
+                          child: const Icon(
+                            Icons.check,
+                            size: 32,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
               )
             ],
           ),

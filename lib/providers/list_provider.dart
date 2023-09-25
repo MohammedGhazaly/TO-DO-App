@@ -24,4 +24,8 @@ class ListsProvider with ChangeNotifier {
   Future<void> updateTask(String id, TaskModel task) async {
     await FirebaseServices.updateTaskInFireStore(id, task);
   }
+
+  Future<void> markAsDone(String id) async {
+    await FirebaseServices.markAsDoneInFireStore(id);
+  }
 }

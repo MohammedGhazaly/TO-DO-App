@@ -34,4 +34,8 @@ class FirebaseServices {
       "dateTime": task.dateTime?.millisecondsSinceEpoch,
     });
   }
+
+  static Future<void> markAsDoneInFireStore(String id) async {
+    await FirebaseServices.initCollection().doc(id).update({"isDone": true});
+  }
 }
