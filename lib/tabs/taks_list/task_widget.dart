@@ -27,15 +27,17 @@ class TaskWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               label: "Delete",
               backgroundColor: MyTheme.redColor,
-              onPressed: (context) {
-                listsProvider.deleteTask(task.id!).timeout(
-                  Duration.zero,
-                  onTimeout: () {
-                    showTopSnackBar(Overlay.of(context),
-                        const CustomSnackBar.error(message: "Task removed"));
-                    listsProvider.getAllTasks();
-                  },
-                );
+              onPressed: (context) async {
+                listsProvider
+                    .deleteTask(task.id!)
+                    .timeout(const Duration(milliseconds: 50), onTimeout: () {
+                  listsProvider
+                      .getAllTasks()
+                      .timeout(const Duration(milliseconds: 50));
+                });
+
+                showTopSnackBar(Overlay.of(context),
+                    const CustomSnackBar.error(message: "Task removed"));
               },
             )
           ],
@@ -75,7 +77,9 @@ class TaskWidget extends StatelessWidget {
                       task.title ?? "",
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             fontWeight: FontWeight.w700,
-                            color: MyTheme.primaryColor,
+                            color: task.isDone!
+                                ? MyTheme.greenColor
+                                : MyTheme.primaryColor,
                           ),
                     ),
                     Text(
@@ -99,18 +103,20 @@ class TaskWidget extends StatelessWidget {
                             fontWeight: FontWeight.w700),
                       )
                     : InkWell(
-                        onTap: () {
-                          listsProvider
-                              .markAsDone(task.id!)
-                              .timeout(Duration.zero, onTimeout: () {
-                            listsProvider.getAllTasks();
-                            showTopSnackBar(
-                              Overlay.of(context),
-                              const CustomSnackBar.success(
-                                message: "Task is done :).",
-                              ),
-                            );
+                        onTap: () async {
+                          listsProvider.markAsDone(task.id!).timeout(
+                              const Duration(milliseconds: 50), onTimeout: () {
+                            listsProvider
+                                .getAllTasks()
+                                .timeout(const Duration(milliseconds: 50));
                           });
+
+                          showTopSnackBar(
+                            Overlay.of(context),
+                            const CustomSnackBar.success(
+                              message: "Task is done :).",
+                            ),
+                          );
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(

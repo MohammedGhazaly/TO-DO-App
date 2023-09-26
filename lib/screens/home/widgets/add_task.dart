@@ -110,14 +110,14 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
                         ),
                         foregroundColor:
                             const MaterialStatePropertyAll(Colors.white)),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         TaskModel task = TaskModel(
                           title: taskTitle,
                           description: taskDescription,
                           dateTime: selectedDate,
                         );
-                        addTask(task);
+                        await addTask(task);
                       }
                     },
                     child: Text(
@@ -150,20 +150,20 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
     selectedDate = chosenDate;
   }
 
-  void addTask(TaskModel task) {
-    listsProvider.addTask(task).timeout(
-      const Duration(milliseconds: 0),
-      onTimeout: () {
-        listsProvider.getAllTasks();
-        showTopSnackBar(
-          displayDuration: const Duration(seconds: 2),
-          Overlay.of(context),
-          const CustomSnackBar.success(
-            message: "Task added successfully",
-          ),
-        );
-        Navigator.pop(context);
-      },
+  Future<void> addTask(TaskModel task) async {
+    listsProvider.addTask(task).timeout(const Duration(milliseconds: 1),
+        onTimeout: () {
+      listsProvider
+          .getAllTasks()
+          .timeout(const Duration(milliseconds: 100), onTimeout: () {});
+    });
+    showTopSnackBar(
+      displayDuration: const Duration(seconds: 2),
+      Overlay.of(context),
+      const CustomSnackBar.success(
+        message: "Task added successfully",
+      ),
     );
+    Navigator.pop(context);
   }
 }

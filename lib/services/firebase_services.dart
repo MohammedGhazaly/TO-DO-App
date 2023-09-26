@@ -15,6 +15,12 @@ class FirebaseServices {
     );
   }
 
+  static Future<List<QueryDocumentSnapshot<TaskModel>>>
+      getTasksFromFireStore() async {
+    var querySnapshot = await FirebaseServices.initCollection().get();
+    return querySnapshot.docs;
+  }
+
   static Future<void> addTaskToFirebase(TaskModel task) async {
     var taskCollection = initCollection(); // get/create collection(Class)
     var taskDocument =

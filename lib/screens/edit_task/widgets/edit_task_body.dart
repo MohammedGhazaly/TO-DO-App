@@ -126,10 +126,10 @@ class _EditTaskBodyState extends State<EditTaskBody> {
                     ),
                     foregroundColor:
                         const MaterialStatePropertyAll(Colors.white)),
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    widget.taskModel.dateTime = currentDate;
                     widget.taskModel.title = title;
+                    widget.taskModel.description = description;
                     widget.taskModel.dateTime = currentDate;
                     updateTask(
                       id: widget.taskModel.id!,
@@ -164,19 +164,22 @@ class _EditTaskBodyState extends State<EditTaskBody> {
     currentDate = chosenDate;
   }
 
-  updateTask({required String id, required TaskModel task}) {
+  Future<void> updateTask({required String id, required TaskModel task}) async {
     listsProvider.updateTask(id, task).timeout(
-      const Duration(seconds: 0),
+      const Duration(milliseconds: 100),
       onTimeout: () {
-        listsProvider.getAllTasks();
-        showTopSnackBar(
-          Overlay.of(context),
-          const CustomSnackBar.info(
-            message: "Task edited.",
-          ),
-        );
-        Navigator.of(context).pop();
+        listsProvider
+            .getAllTasks()
+            .timeout(const Duration(milliseconds: 100), onTimeout: () {});
       },
     );
+
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.info(
+        message: "Task edited.",
+      ),
+    );
+    Navigator.of(context).pop();
   }
 }

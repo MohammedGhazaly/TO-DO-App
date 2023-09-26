@@ -6,26 +6,35 @@ class ListsProvider with ChangeNotifier {
   List<TaskModel> tasksList = [];
 
   Future<void> getAllTasks() async {
-    var querySnapshot = await FirebaseServices.initCollection().get();
+    // var querySnapshot = await FirebaseServices.initCollection()
+    //     .get()
+    //     .timeout(const Duration(milliseconds: 50));
 
-    tasksList =
-        querySnapshot.docs.map((taskSnapshot) => taskSnapshot.data()).toList();
+    // tasksList =
+    //     querySnapshot.docs.map((taskSnapshot) => taskSnapshot.data()).toList();
+    // notifyListeners();
+    var tasksQuery = await FirebaseServices.getTasksFromFireStore();
+    tasksList = tasksQuery.map((taskSnapshot) => taskSnapshot.data()).toList();
     notifyListeners();
   }
 
   Future<void> addTask(TaskModel task) async {
     await FirebaseServices.addTaskToFirebase(task);
+    notifyListeners();
   }
 
   Future<void> deleteTask(String id) async {
     await FirebaseServices.deleteTaskFromFireStore(id);
+    notifyListeners();
   }
 
   Future<void> updateTask(String id, TaskModel task) async {
     await FirebaseServices.updateTaskInFireStore(id, task);
+    notifyListeners();
   }
 
   Future<void> markAsDone(String id) async {
     await FirebaseServices.markAsDoneInFireStore(id);
+    notifyListeners();
   }
 }
