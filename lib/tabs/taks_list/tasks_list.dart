@@ -29,7 +29,11 @@ class _TasksTabState extends State<TasksTab> {
         Container(
           decoration: BoxDecoration(color: MyTheme.primaryColor),
           child: DatePicker(
-            DateTime.now().subtract(const Duration(days: 7)),
+            DateTime.now().subtract(const Duration(days: 2)),
+            onDateChange: (date) async {
+              listProvider.setNewSelectedDate(date);
+              await listProvider.getAllTasks();
+            },
             daysCount: 365,
 
             locale: appConfig.appLanguage,

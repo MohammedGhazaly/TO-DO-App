@@ -4,7 +4,7 @@ import 'package:todo_app/services/firebase_services.dart';
 
 class ListsProvider with ChangeNotifier {
   List<TaskModel> tasksList = [];
-
+  DateTime selectedDate = DateTime.now();
   Future<void> getAllTasks() async {
     // var querySnapshot = await FirebaseServices.initCollection()
     //     .get()
@@ -15,26 +15,34 @@ class ListsProvider with ChangeNotifier {
     // notifyListeners();
     var tasksQuery = await FirebaseServices.getTasksFromFireStore();
     tasksList = tasksQuery.map((taskSnapshot) => taskSnapshot.data()).toList();
+    tasksList = tasksList.where((task) {
+      if (task.dateTime!.day == selectedDate.day &&
+          task.dateTime!.month == selectedDate.month &&
+          task.dateTime!.year == selectedDate.year) {
+        return true;
+      }
+      return false;
+    }).toList();
     notifyListeners();
   }
 
   Future<void> addTask(TaskModel task) async {
     await FirebaseServices.addTaskToFirebase(task);
-    notifyListeners();
   }
 
   Future<void> deleteTask(String id) async {
     await FirebaseServices.deleteTaskFromFireStore(id);
-    notifyListeners();
   }
 
   Future<void> updateTask(String id, TaskModel task) async {
     await FirebaseServices.updateTaskInFireStore(id, task);
-    notifyListeners();
   }
 
   Future<void> markAsDone(String id) async {
     await FirebaseServices.markAsDoneInFireStore(id);
-    notifyListeners();
+  }
+
+  void setNewSelectedDate(DateTime date) {
+    selectedDate = date;
   }
 }
