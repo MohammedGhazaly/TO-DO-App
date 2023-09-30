@@ -99,7 +99,7 @@ class TaskWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 child: task.isDone == true
                     ? Text(
-                        AppLocalizations.of(context)!.edit_message,
+                        AppLocalizations.of(context)!.done,
                         style: TextStyle(
                             color: MyTheme.greenColor,
                             fontSize: 22,
@@ -116,8 +116,9 @@ class TaskWidget extends StatelessWidget {
 
                           showTopSnackBar(
                             Overlay.of(context),
-                            const CustomSnackBar.success(
-                              message: "Task is done :).",
+                            CustomSnackBar.success(
+                              message:
+                                  AppLocalizations.of(context)!.done_message,
                             ),
                           );
                         },
