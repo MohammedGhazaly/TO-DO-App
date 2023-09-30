@@ -16,5 +16,9 @@
 "arabic" : "Arabic",
 "mode" : "Mode",
 "light" : "Light",
-"dark" : "داكن"
+"dark" : "داكن",
+"add_message" : "تم اضافة المهمه بنجاح",
+"delete_message" : "تم حذف المهمه بنجاح",
+"edit_message" : "تم التعديل بنجاح",
+"done_message" : "تهانينا, لقد أنهيت المهمه"
 }

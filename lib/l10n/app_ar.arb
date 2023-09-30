@@ -16,5 +16,9 @@
 "arabic" : "العربية",
 "mode" : "النمط",
 "light" : "مضئ",
-"dark" : "داكن"
+"dark" : "داكن",
+"add_message" : "Task added successfully",
+"delete_message" : "Task deleted successfully",
+"edit_message" : "Task edited successfully",
+"done_message" : "Congratulations! Task is done"
 }

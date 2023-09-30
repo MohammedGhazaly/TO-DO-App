@@ -23,6 +23,9 @@ class ListsProvider with ChangeNotifier {
       }
       return false;
     }).toList();
+    tasksList.sort((task1, task2) {
+      return task1.dateTime!.compareTo(task2.dateTime!);
+    });
     notifyListeners();
   }
 

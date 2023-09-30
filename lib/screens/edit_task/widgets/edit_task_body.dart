@@ -176,8 +176,8 @@ class _EditTaskBodyState extends State<EditTaskBody> {
 
     showTopSnackBar(
       Overlay.of(context),
-      const CustomSnackBar.info(
-        message: "Task edited.",
+      CustomSnackBar.info(
+        message: AppLocalizations.of(context)!.edit_message,
       ),
     );
     Navigator.of(context).pop();

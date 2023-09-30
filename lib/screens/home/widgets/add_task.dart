@@ -160,8 +160,8 @@ class _AddTaskWidgetState extends State<AddTaskWidget> {
     showTopSnackBar(
       displayDuration: const Duration(seconds: 2),
       Overlay.of(context),
-      const CustomSnackBar.success(
-        message: "Task added successfully",
+      CustomSnackBar.success(
+        message: AppLocalizations.of(context)!.add_message,
       ),
     );
     Navigator.pop(context);

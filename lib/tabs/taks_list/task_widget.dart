@@ -7,6 +7,7 @@ import 'package:todo_app/providers/app_config_provider.dart';
 import 'package:todo_app/providers/list_provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskWidget extends StatelessWidget {
   final TaskModel task;
@@ -36,8 +37,10 @@ class TaskWidget extends StatelessWidget {
                       .timeout(const Duration(milliseconds: 50));
                 });
 
-                showTopSnackBar(Overlay.of(context),
-                    const CustomSnackBar.error(message: "Task removed"));
+                showTopSnackBar(
+                    Overlay.of(context),
+                    CustomSnackBar.error(
+                        message: AppLocalizations.of(context)!.delete_message));
               },
             )
           ],
@@ -96,7 +99,7 @@ class TaskWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 child: task.isDone == true
                     ? Text(
-                        "Done!",
+                        AppLocalizations.of(context)!.edit_message,
                         style: TextStyle(
                             color: MyTheme.greenColor,
                             fontSize: 22,
